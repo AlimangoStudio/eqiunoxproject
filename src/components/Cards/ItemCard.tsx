@@ -3,18 +3,12 @@ import { Card, CardBody } from '@windmill/react-ui'
 import { useHistory } from 'react-router-dom'
 
 interface IItemCard{
-  key: string
+  key: number
   imageUri: string
-  title: string
-  avatar: string
-  user: string
-  price: string
-  maxSupply: string
-  supply: string
   children?: ReactSVGElement
 }
 
-function ItemCard({ key, imageUri, title, avatar, user, price, maxSupply, supply, children: icon }: IItemCard ) {
+function ItemCard({ key, imageUri, children: icon }: IItemCard ) {
 
   const history = useHistory()
   const onNavigate = () => {

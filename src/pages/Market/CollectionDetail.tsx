@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
-import CollectionCard from '../../components/Cards/CollectionCard'
 import ItemCard from '../../components/Cards/ItemCard'
 import PropertyCard from '../../components/Cards/PropertyCard'
-import PageTitle from '../../components/Typography/PageTitle'
 import { Card, CardBody } from '@windmill/react-ui'
 
 const title = 'PROOF Collective'
@@ -42,7 +40,7 @@ function CollectionDetail() {
             <Card className='p-2 my-12'>
                 <CardBody className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-12 gap-1'  style={{padding: '1px'}}>
                     {
-                        [...Array(48).keys()].map(i =>  <ItemCard key={i} imageUri='collections/23.png'/>)
+                        [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 0].map(i =>  <ItemCard key={i} imageUri='collections/23.png'/>)
                     }
                 </CardBody>
             </Card>

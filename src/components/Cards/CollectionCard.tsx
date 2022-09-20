@@ -3,7 +3,6 @@ import { Card, CardBody } from '@windmill/react-ui'
 import { useHistory } from 'react-router-dom'
 
 interface ICollectionCard{
-  id: string
   imageUri: string
   title: string
   avatar: string
@@ -14,7 +13,7 @@ interface ICollectionCard{
   children?: ReactSVGElement
 }
 
-function CollectionCard({ id, imageUri, title, avatar, user, price, maxSupply, supply, children: icon }: ICollectionCard) {
+function CollectionCard({ imageUri, title, avatar, user, price, maxSupply, supply, children: icon }: ICollectionCard) {
 
   const history = useHistory()
   const onNavigate = () => {

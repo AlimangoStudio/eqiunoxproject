@@ -4,8 +4,6 @@ import { lazy } from 'react';
 const Home = lazy(() => import('../pages/Home'))
 const LaunchPad = lazy(() => import('../pages/LaunchPad'))
 const Market = lazy(() => import('../pages/Market'))
-const CollectionDetail = lazy(() => import('../pages/Market/CollectionDetail'))
-const ItemDetail = lazy(() => import('../pages/Market/ItemDetail'))
 const Dashboard = lazy(() => import('../pages/Dashboard'));
 const Forms = lazy(() => import('../pages/Forms'));
 const Cards = lazy(() => import('../pages/Cards'));
@@ -38,14 +36,6 @@ const routes = [
   {
     path: '/market', // the url
     component: Market, // view rendered
-  },
-  {
-    path: '/market/:id', // the url
-    component: CollectionDetail, // view rendered
-  },
-  {
-    path: '/market/:id/:itemId', // the url
-    component: ItemDetail, // view rendered
   },
   {
     path: '/dashboard', // the url
