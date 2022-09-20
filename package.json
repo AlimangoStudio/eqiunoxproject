@@ -17,6 +17,12 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@near-wallet-selector/core": "^7.0.2",
+    "@near-wallet-selector/default-wallets": "^7.0.2",
+    "@near-wallet-selector/modal-ui": "^7.0.2",
+    "@near-wallet-selector/my-near-wallet": "^7.0.2",
+    "@near-wallet-selector/near-wallet": "^7.0.2",
+    "@near-wallet-selector/sender": "^7.0.2",
     "@testing-library/jest-dom": "4.2.4",
     "@testing-library/react": "9.5.0",
     "@testing-library/user-event": "7.2.1",
@@ -24,13 +30,15 @@
     "chart.js": "2.9.3",
     "classnames": "^2.3.1",
     "faker": "4.1.0",
+    "near-api-js": "^1.0.0",
     "react": "^16.13.1",
     "react-chartjs-2": "2.9.0",
     "react-dom": "^16.13.1",
     "react-focus-lock": "2.4.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
-    "react-transition-group": "4.4.1"
+    "react-transition-group": "4.4.1",
+    "rxjs": "^7.5.6"
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "1.1.4",
