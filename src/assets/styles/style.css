@@ -1,0 +1,62 @@
+.fill-jacarta-300 {
+    fill: #a1a2b3;
+}
+
+.fill-white {
+    fill: #fff;
+}
+
+.fill-accent {
+    fill: #8358ff;
+}
+
+.fill-current {
+    fill: currentColor;
+}
+
+.fill-jacarta-400 {
+    fill: #7d7f96;
+}
+
+.dark .dark\:fill-white {
+    fill: #6874a9;
+}
+
+.dark .dark\:fill-jacarta-300 {
+    fill: #a1a2b3;
+}
+
+@-webkit-keyframes fly {
+
+    0%,
+    to {
+        transform: translateY(5%);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fly {
+
+    0%,
+    to {
+        transform: translateY(5%);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+}
+
+.animate-fly {
+    -webkit-animation: fly 6s cubic-bezier(0.75, 0.02, 0.31, 0.87) infinite;
+    animation: fly 6s cubic-bezier(0.75, 0.02, 0.31, 0.87) infinite;
+}
+
+/* Evil Card on LaunchPad */
+.evil-card img {
+    border-radius: 5px;
+}
+/* End  */

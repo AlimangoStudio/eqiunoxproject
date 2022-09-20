@@ -1,2 +1,0 @@
-# eqiunoxproject
-nft and launchpad
