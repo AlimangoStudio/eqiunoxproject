@@ -4,7 +4,7 @@ import PropertyCard from '../../components/Cards/PropertyCard'
 import { Card, CardBody } from '@windmill/react-ui'
 import { useParams } from 'react-router-dom'
 import { useWalletSelector } from '../../context/WalletSelectorContext'
-import { providers, utils } from 'near-api-js'
+import { providers } from 'near-api-js'
 import { CodeResult } from 'near-api-js/lib/providers/provider'
 import { DSale, NftMetadata, Sale } from '../../constants/types'
 import { MARKET_CONTRACT_ID } from '../../constants/address'
@@ -12,7 +12,6 @@ import Bluebird from 'bluebird'
 
 const description = `A private group of 1000 dedicated NFT collectors and artists. Membership to the collective and all of the benefits come from holding the PROOF Collective NFT.
 `
-
 const selectedCSS = `inline-block p-4 rounded-t-lg border-b-2 text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500`
 const nonSelectedCSS = `inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 dark:border-transparent text-gray-500 dark:text-gray-400 border-gray-100 dark:border-gray-700`
 type QuizParams = {
@@ -21,7 +20,7 @@ type QuizParams = {
 
 function CollectionDetail() {
 
-    const { selector, modal, accounts, accountId } = useWalletSelector();
+    const { selector, accountId } = useWalletSelector();
     let { id } = useParams<QuizParams>()
 
     const [contract, setContract] = useState<NftMetadata>()
@@ -29,95 +28,33 @@ function CollectionDetail() {
     const [isSelected, setIsSelect] = useState<Boolean>(true)
     const [myItems, setMyItems] = useState<DSale[]>([])
 
-    // Define Call back functions
-    const getCollectionMetadata = useCallback((nftContractId) => {
-        const { network } = selector.options;
-        const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
+    const nearView = useCallback((argBase, contractId, methodName, ) => {
+		const { network } = selector.options;
+		const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 
-        return provider
-            .query<CodeResult>({
-                request_type: "call_function",
-                account_id: nftContractId,
-                method_name: "nft_metadata",
-                args_base64: "",
-                finality: "optimistic",
-            })
-            .then((res) => ({ ...JSON.parse(Buffer.from(res.result).toString()), owner_id: id }));
-    }, [selector]);
-
-    const getSaleByTokenId = useCallback((marketContractId, nftContractId, tokenId) => {
-        const { network } = selector.options;
-        const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
-
-        return provider
-            .query<CodeResult>({
-                request_type: "call_function",
-                account_id: marketContractId,
-                method_name: "get_sale",
-                args_base64: btoa(`{"nft_contract_token": "${nftContractId}.${tokenId}"}`),
-                finality: "optimistic",
-            })
-            .then((res) => JSON.parse(Buffer.from(res.result).toString()));
-    }, [selector])
-    
-    const getSalesByContractId = useCallback((marketContractId, nftContractId) => {
-        const { network } = selector.options;
-        const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
-
-        return provider
-            .query<CodeResult>({
-                request_type: "call_function",
-                account_id: marketContractId,
-                method_name: "get_sales_by_nft_contract_id",
-                args_base64: btoa(`{"nft_contract_id": "${nftContractId}", "from_index": "0", "limit": 10}`),
-                finality: "optimistic",
-            })
-            .then((res) => JSON.parse(Buffer.from(res.result).toString()));
-    }, [selector])
-
-    const getNFTByTokenId = useCallback((nftContractId, tokenId) => {
-        const { network } = selector.options;
-        const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
-
-        return provider
-            .query<CodeResult>({
-                request_type: "call_function",
-                account_id: nftContractId,
-                method_name: "nft_token",
-                args_base64: btoa(`{"token_id": "${tokenId}"}`),
-                finality: "optimistic",
-            })
-            .then((res) => ({ ...JSON.parse(Buffer.from(res.result).toString()) }));
-    }, [selector])
-
-    const getNFTByOwner = useCallback((nftContractId, ownerId) => {
-        const { network } = selector.options;
-        const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
-
-        return provider
-            .query<CodeResult>({
-                request_type: "call_function",
-                account_id: nftContractId,
-                method_name: "nft_tokens_for_owner",
-                args_base64: btoa(`{"account_id": "${ownerId}", "limit": 10}`),
-                finality: "optimistic",
-            })
-            .then((res) => (JSON.parse(Buffer.from(res.result).toString())));
-    }, [selector, accountId])
+		return provider
+			.query<CodeResult>({
+				request_type: "call_function",
+				account_id: contractId,
+				method_name: methodName,
+				args_base64: btoa(argBase),
+				finality: "optimistic",
+			})
+			.then((res) => JSON.parse(Buffer.from(res.result).toString()));
+	}, [selector])
 
     useEffect(() => {
-        getCollectionMetadata(id).then(setContract)
-
+        nearView("", id, "nft_metadata").then(setContract)
         const getSalesDetail = async () => {
-            let sales: [Sale] = await getSalesByContractId(MARKET_CONTRACT_ID, id)
-            let dSales = await Bluebird.map(Object.values(sales), (sale: Sale) => getNFTByTokenId(id, sale['token_id']).then(res => ({ sale_conditions: sale.sale_conditions, ...res })))
+            let sales: [Sale] = await nearView(`{"nft_contract_id": "${id}", "from_index": "0", "limit": 10}`, MARKET_CONTRACT_ID, "get_sales_by_nft_contract_id")
+            let dSales = await Bluebird.map(Object.values(sales), (sale: Sale) => nearView(`{"token_id": "${sale['token_id']}"}`, id, "nft_token").then(res => ({ sale_conditions: sale.sale_conditions, ...res })))
             setSales(dSales)
         }
         getSalesDetail()
 
         const getMyItemsDetail = async () => {
-            let sales: [Sale] = await getSalesByContractId(MARKET_CONTRACT_ID, id)
-            let myItems: [DSale] = await getNFTByOwner(id, accountId)
+            let sales: [Sale] = await nearView(`{"nft_contract_id": "${id}", "from_index": "0", "limit": 10}`, MARKET_CONTRACT_ID, "get_sales_by_nft_contract_id") 
+            let myItems: [DSale] = await nearView(`{"account_id": "${accountId}", "limit": 10}`, id, "nft_tokens_for_owner" ) 
 
             myItems.map(item => {
                 sales.map(sale => {

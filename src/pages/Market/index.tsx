@@ -1,8 +1,8 @@
 import { Button } from '@windmill/react-ui'
 import React, { useCallback, useEffect, useState } from 'react'
 import Bluebird from 'bluebird'
-import { providers, utils } from "near-api-js";
-import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom'
+import { providers } from "near-api-js";
+import { Route, useHistory } from 'react-router-dom'
 import type {
 	AccountView,
 	CodeResult,
@@ -22,7 +22,7 @@ export type Account = AccountView & {
 const MarketContent: React.FC = () => {
 
 	
-	const { selector, modal, accounts, accountId } = useWalletSelector();
+	const { selector, modal, accountId } = useWalletSelector();
 
 	const [account, setAccount] = useState<Account | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -102,15 +102,14 @@ const MarketContent: React.FC = () => {
 			setCollections(collections)
 		}
 		getCollectionMetadatas()
-		console.log('--- history', history)
 	}, [])
 
 	return (
 		<div>
 			<div className='flex justify-between items-center py-8'>
 				<PageTitle>{ history.location.pathname.split('/').length > 3 && <span onClick={() => history.push('/app/market')} className='text-sm cursor-pointer'>{`<< Collection`}</span>}{ accountId && ` Welcome ${accountId}`}</PageTitle>
-				<Button className='' onClick={account? handleSignOut : showModal}>{
-					!account? <span>Connect Wallet</span> : <span>Disconnect Wallet</span>
+				<Button className='' onClick={accountId? handleSignOut : showModal}>{
+					!accountId? <span>Connect Wallet</span> : <span>Disconnect Wallet</span>
 				}</Button>
 			</div>
 			
@@ -130,9 +129,9 @@ const MarketContent: React.FC = () => {
 										</div> )
 								}
 								
-								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/img/collections/188.png'} ></CollectionCard>
-								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/img/collections/188.png'} ></CollectionCard>
-								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/img/collections/188.png'} ></CollectionCard>
+								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/188.png'} ></CollectionCard>
+								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/188.png'} ></CollectionCard>
+								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/188.png'} ></CollectionCard>
 							</div>
 						</div>
 					} />

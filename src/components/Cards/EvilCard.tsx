@@ -32,7 +32,7 @@ function EvilCard({ images, title, avatar, user, price, supply, children: icon }
         </div>
         <div className='my-2 grid grid-flow-col gap-1 my-4 dark:text-white'>
           <div className='col-span-3'>{title}</div>
-          <div className=''><img className='float-left' src='assets/img/SolanaIcon.svg' width={25}/>{price}</div>
+          <div className=''><img className='float-left' src='assets/SolanaIcon.svg' width={25}/>{price}</div>
         </div>
         <div className='grid grid-flow-col gap-1 my-4 dark:text-white'>
           <div className='col-span-3 text-xs'>

@@ -71,7 +71,7 @@ function Home() {
                                 </defs>
                                 <g clipPath="url(#clipping)">
                                     <image
-                                        href="assets/img/her.png"
+                                        href="assets/her.png"
                                         width="200"
                                         height="200"
                                         clipPath="url(#clipping)"

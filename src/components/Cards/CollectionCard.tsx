@@ -27,7 +27,7 @@ function CollectionCard({ imageUri, title, ownerId, price, maxSupply, supply, ch
         </div>
         <div className='flex justify-between my-2 =my-4 dark:text-white'>
           <div className=''>{title}</div>
-          <div className=''>{price}N</div>
+          <div className=''>{price}<img src='/assets/near.png' className='w-6 h-6 inline mb-1'/></div>
         </div>
         <div className='flex justify-between my-4 dark:text-white'>
           <div className='text-xs'>
