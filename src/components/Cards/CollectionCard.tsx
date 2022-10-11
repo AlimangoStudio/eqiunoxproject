@@ -5,19 +5,18 @@ import { useHistory } from 'react-router-dom'
 interface ICollectionCard{
   imageUri: string
   title: string
-  avatar: string
-  user: string
+  ownerId: string
   price: string
   maxSupply: string
   supply: string
   children?: ReactSVGElement
 }
 
-function CollectionCard({ imageUri, title, avatar, user, price, maxSupply, supply, children: icon }: ICollectionCard) {
+function CollectionCard({ imageUri, title, ownerId, price, maxSupply, supply, children: icon }: ICollectionCard) {
 
   const history = useHistory()
   const onNavigate = () => {
-    history.push('/app/market/1')
+    history.push(`/app/market/${ownerId}`)
   }
 
   return (
@@ -32,7 +31,7 @@ function CollectionCard({ imageUri, title, avatar, user, price, maxSupply, suppl
         </div>
         <div className='flex justify-between my-4 dark:text-white'>
           <div className='text-xs'>
-            <img  src={avatar} width={20} className="float-left mr-2"/>
+            <div className=''>{ownerId}</div>
           </div>
           <div className='text-sm'><b>{supply}/{maxSupply}</b></div>
         </div>

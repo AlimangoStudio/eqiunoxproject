@@ -1,40 +1,48 @@
 import React, { ReactSVGElement } from 'react'
 import { Card, CardBody } from '@windmill/react-ui'
 import { useHistory } from 'react-router-dom'
+import { utils } from 'near-api-js'
 
 interface IItemCard{
-  key: number
+  contractId: string
+  isMine?: boolean
   imageUri: string
+  ownerId?: string
+  title: string
+  price: string
+  tokenId: string
   children?: ReactSVGElement
 }
 
-function ItemCard({ key, imageUri, children: icon }: IItemCard ) {
+function ItemCard({ contractId, isMine = false, imageUri, price, ownerId, title, tokenId, children: icon }: IItemCard ) {
 
   const history = useHistory()
   const onNavigate = () => {
-    history.push('/app/market/1/1')
+    history.push(`/app/market/${contractId}/${tokenId}`)
   }
 
   return (
-    <div key={key}>
-        <Card className="cursor-pointer" onClick={onNavigate}>
-        <CardBody className="m-0" style={{padding: 0}}>
-          <div className=''>
-            <img src={imageUri}/>
+    <Card className="evil-card cursor-pointer" onClick={onNavigate}>
+      <CardBody className="">
+        <div className=''>
+          <img src={imageUri}/>
+        </div>
+        <div className='flex items-end justify-between my-2 my-4 dark:text-white'>
+          <div className='text-sm'>{title}</div>
+          <div className='text-xs'>{isMine && price && `Listed as `}<b className='text-sm'>{isMine && price && `${utils.format.formatNearAmount(price)} N`}</b></div>
+        </div>
+        {
+          !isMine &&
+          <div className='flex justify-between my-4 dark:text-white'>
+          <div className='text-sm'>
+            {utils.format.formatNearAmount(price)} N
           </div>
-          {/* <div className='my-2 grid grid-flow-col gap-1 my-4 dark:text-white'>
-            <div className='col-span-3'>{title}</div>
-            <div className=''>{price}N</div>
-          </div>
-          <div className='grid grid-flow-col gap-1 my-4 dark:text-white'>
-            <div className='col-span-3 text-xs'>
-              <img  src={avatar} width={20} className="float-left mr-2"/>
-            </div>
-            <div className='text-sm'><b>{supply}/{maxSupply}</b></div>
-          </div> */}
-        </CardBody>
-      </Card>
-    </div>
+          <div className='text-sm'>{ownerId}</div>
+        </div>
+        }
+       
+      </CardBody>
+    </Card>
     
   )
 }

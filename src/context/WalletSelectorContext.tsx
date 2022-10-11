@@ -12,7 +12,7 @@ import { setupSender } from "@near-wallet-selector/sender";
 // import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
 // import { setupNightlyConnect } from "@near-wallet-selector/nightly-connect";
 // import { setupWalletConnect } from "@near-wallet-selector/wallet-connect";
-import { CONTRACT_ID } from "../constants/address";
+import { MARKET_CONTRACT_ID } from "../constants/address";
 
 declare global {
   interface Window {
@@ -67,7 +67,7 @@ export const WalletSelectorContextProvider: React.FC = ({ children }) => {
         // }),
       ],
     });
-    const _modal = setupModal(_selector, { contractId: CONTRACT_ID });
+    const _modal = setupModal(_selector, { contractId: MARKET_CONTRACT_ID });
     const state = _selector.store.getState();
 
     setAccounts(state.accounts);
