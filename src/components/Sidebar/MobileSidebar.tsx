@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import SidebarContent from './SidebarContent';
 import { Transition, Backdrop } from '@windmill/react-ui';
@@ -12,10 +12,10 @@ function MobileSidebar() {
     <Transition show={isSidebarOpen}>
       <>
         <Transition
-          enter="transition ease-in-out duration-150"
+          enter="transition ease-in-out duration-1500"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="transition ease-in-out duration-150"
+          leave="transition ease-in-out duration-1500"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -23,10 +23,10 @@ function MobileSidebar() {
         </Transition>
 
         <Transition
-          enter="transition ease-in-out duration-150"
+          enter="transition ease-in-out duration-1500"
           enterFrom="opacity-0 transform -translate-x-20"
           enterTo="opacity-100"
-          leave="transition ease-in-out duration-150"
+          leave="transition ease-in-out duration-1500"
           leaveFrom="opacity-100"
           leaveTo="opacity-0 transform -translate-x-20"
         >
