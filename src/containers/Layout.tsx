@@ -33,7 +33,7 @@ function Layout() {
                 return route.component ? (
                   <Route
                     key={i}
-                    exact={true}
+                    // exact={true}
                     path={`/app${route.path}`}
                     render={(props) => <route.component />}
                   />
