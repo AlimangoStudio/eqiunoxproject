@@ -27,7 +27,7 @@ function CollectionDetail() {
     const [sales, setSales] = useState<DSale[]>([])
     const [isSelected, setIsSelect] = useState<Boolean>(true)
     const [myItems, setMyItems] = useState<DSale[]>([])
-
+    const [loading, setLoading] = useState<boolean>(false)
     const nearView = useCallback((argBase, contractId, methodName, ) => {
 		const { network } = selector.options;
 		const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
@@ -44,28 +44,31 @@ function CollectionDetail() {
 	}, [selector])
 
     useEffect(() => {
-        nearView("", id, "nft_metadata").then(setContract)
+
+       setLoading(true)
+
         const getSalesDetail = async () => {
+            await  nearView("", id, "nft_metadata").then(setContract)
             let sales: [Sale] = await nearView(`{"nft_contract_id": "${id}", "from_index": "0", "limit": 10}`, MARKET_CONTRACT_ID, "get_sales_by_nft_contract_id")
             let dSales = await Bluebird.map(Object.values(sales), (sale: Sale) => nearView(`{"token_id": "${sale['token_id']}"}`, id, "nft_token").then(res => ({ sale_conditions: sale.sale_conditions, ...res })))
             setSales(dSales)
-        }
-        getSalesDetail()
 
-        const getMyItemsDetail = async () => {
-            let sales: [Sale] = await nearView(`{"nft_contract_id": "${id}", "from_index": "0", "limit": 10}`, MARKET_CONTRACT_ID, "get_sales_by_nft_contract_id") 
+            let sales_: [Sale] = await nearView(`{"nft_contract_id": "${id}", "from_index": "0", "limit": 10}`, MARKET_CONTRACT_ID, "get_sales_by_nft_contract_id") 
             let myItems: [DSale] = await nearView(`{"account_id": "${accountId}", "limit": 10}`, id, "nft_tokens_for_owner" ) 
 
             myItems.map(item => {
-                sales.map(sale => {
+                sales_.map(sale => {
                     if ( item.token_id == sale.token_id )  item.sale_conditions = sale.sale_conditions
                 })
                 return item
             })
             setMyItems(myItems)
+
+            setLoading(false)
         }
+        getSalesDetail()
+
        
-        getMyItemsDetail()
     }, [])
 
     return (
@@ -87,7 +90,10 @@ function CollectionDetail() {
             </div>
             <div id="myTabContent">
                 {
-                    isSelected ?
+                    loading && <div>Loading...</div>
+                }
+                {
+                    isSelected && !loading ?
                         <div className="" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div className='mt-4'>
                                 <div className='grid grid-cols-3 gap-1'>

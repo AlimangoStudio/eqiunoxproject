@@ -50,6 +50,8 @@ export type ParasCollectionMetadata = {
     collection: string
     creator_id: string
     media: string
+    cover?: string
+    previews?: [string]
 }
 
 export type ParasCollectionStat = {
