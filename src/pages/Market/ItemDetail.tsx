@@ -163,7 +163,7 @@ function ItemDetail() {
 														<div>
 															<p className="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-200 ">Current Price</p>
 															<div className='flex justify-between items-center'>
-																<p className="text-sm font-medium text-gray-700 dark:text-gray-200">{utils.format.formatNearAmount(item.sale_conditions)} N</p>
+																<p className="text-sm font-medium text-gray-700 dark:text-gray-200">{utils.format.formatNearAmount(item.sale_conditions)} <img src='/assets/near.png' className='w-6 h-6 inline mb-1'/></p>
 																<div className='flex justify-center'><Button onClick={() => openModal()} size="small" className="w-full">Update Price</Button></div>
 																{/* Modal */}
 																<Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -204,7 +204,7 @@ function ItemDetail() {
 															<p className="mb-2 text-md font-medium text-gray-600 dark:text-gray-400">Please list item on marketplace</p>
 															<Label>
 																<span>Storage Balance (0.01 Near per 1 sale)</span>
-																<p className='text-sm font-medium text-gray-800 dark:text-gray-200'>{ utils.format.formatNearAmount(storageBalance)}</p>
+																<p className='text-sm font-medium text-gray-800 dark:text-gray-200'>{ utils.format.formatNearAmount(storageBalance)} <img src='/assets/near.png' className='w-6 h-6 inline mb-1'/></p>
 																
 															</Label>
 															{
@@ -253,7 +253,7 @@ function ItemDetail() {
 											:
 											<div>
 												<p className="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-200">Current Price</p>
-												<p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{item && utils.format.formatNearAmount(item.sale_conditions)} N</p>
+												<p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{item && utils.format.formatNearAmount(item.sale_conditions)} <img src='/assets/near.png' className='w-6 h-6 inline mb-1'/></p>
 												<div className='flex justify-center mt-4'><Button onClick={() => onOffer()} size="large" className="w-full">Buy</Button></div>
 											</div>
 									}

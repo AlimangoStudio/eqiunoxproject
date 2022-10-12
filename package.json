@@ -29,6 +29,7 @@
     "@types/bluebird": "^3.5.37",
     "@windmill/react-ui": "^0.6.0",
     "add": "^2.0.6",
+    "axios": "^1.1.2",
     "chart.js": "2.9.3",
     "classnames": "^2.3.1",
     "faker": "4.1.0",

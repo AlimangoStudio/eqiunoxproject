@@ -1,12 +1,15 @@
 export type NftMetadata = {
-    base_uri: string
+    base_uri?: string
     icon: string
     name: string
     symbol: string
-    reference: string
-    spec: string
-    reference_hash: string
+    reference?: string
+    spec?: string
+    reference_hash?: string
     owner_id: string
+    floor_price?: string
+    total_cards_sale: number | 0
+    total_cards_not_sale: number | 0
 }
 
 
@@ -39,4 +42,18 @@ export type DSale = {
     royalty: object
     sale_conditions: string
     token_id: string
+}
+
+export type ParasCollectionMetadata = {
+    _id: string
+    collection_id: string
+    collection: string
+    creator_id: string
+    media: string
+}
+
+export type ParasCollectionStat = {
+    total_card_sale: number
+    total_card_not_sale: number
+    floor_price: string
 }
