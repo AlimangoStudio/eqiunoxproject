@@ -29,7 +29,7 @@ function ItemCard({ contractId, isMine = false, imageUri, price, ownerId, title,
         </div>
         <div className='flex items-end justify-between my-2 my-4 dark:text-white'>
           <div className='text-sm'>{title}</div>
-          <div className='text-xs'>{isMine && price && `Listed as `}<b className='text-sm'>{isMine && price && `${utils.format.formatNearAmount(price)} `}</b><img src='/assets/near.png' className='w-6 h-6 inline mb-1'/></div>
+          <div className='text-xs'>{isMine && price && `Listed as `}<b className='text-sm'>{isMine && price && <div>{`${utils.format.formatNearAmount(price)} `}<img src='/assets/near.png' className='w-6 h-6 inline mb-1'/></div>}</b></div>
         </div>
         {
           !isMine &&

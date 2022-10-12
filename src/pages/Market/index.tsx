@@ -1,7 +1,8 @@
 import { Button } from '@windmill/react-ui'
 import React, { useCallback, useEffect, useState } from 'react'
 import Bluebird from 'bluebird'
-import { providers } from "near-api-js";
+import { providers, utils } from "near-api-js";
+import axios from 'axios'
 import { Route, useHistory } from 'react-router-dom'
 import type {
 	AccountView,
@@ -13,7 +14,7 @@ import { useWalletSelector, WalletSelectorContextProvider } from '../../context/
 import CollectionDetail from './CollectionDetail'
 import ItemDetail from './ItemDetail'
 import { MARKET_CONTRACT_ID, NFT_CONTRACT_IDS } from '../../constants/address';
-import { NftMetadata } from '../../constants/types';
+import { NftMetadata, ParasCollectionMetadata, ParasCollectionStat } from '../../constants/types';
 
 export type Account = AccountView & {
 	account_id: string;
@@ -98,14 +99,39 @@ const MarketContent: React.FC = () => {
 	useEffect( () => {
 		// Get CollectionMetadatas 
 		const getCollectionMetadatas = async () => {
-			const collections = await Bluebird.map(NFT_CONTRACT_IDS , (id: string) => getCollectionMetadata(id))
-			setCollections(collections)
+			setLoading(true)
+			try {
+				let collections =  await Bluebird.map(NFT_CONTRACT_IDS , (id: string) => getCollectionMetadata(id))
+				setCollections(collections)
+			} catch (error) {
+				console.log(error)
+			} 
+			let res = await axios.get('https://api-v2-mainnet.paras.id/collections', { params: {}})
+			let parasCollections = await Bluebird.map(res.data.data.results, async (collection: ParasCollectionMetadata) => {
+				let response = await axios.get("https://api-v2-mainnet.paras.id/collection-stats", {params: {collection_id: collection.collection_id}})
+				let stat: ParasCollectionStat = response.data.data.results
+				let result: NftMetadata = {
+					name: collection.collection,
+					symbol: collection.collection,
+					owner_id: collection.creator_id,
+					icon: "https://".concat(collection.media.concat('.ipfs.dweb.link')),
+					floor_price: stat.floor_price,
+					total_cards_not_sale: stat.total_card_not_sale,
+					total_cards_sale: stat.total_card_sale
+				} 
+				return result
+			})
+			setCollections([...collections, ...parasCollections])
+			setLoading(false)
 		}
 		getCollectionMetadatas()
+
+
 	}, [])
 
 	return (
 		<div>
+			
 			<div className='flex justify-between items-center py-8'>
 				<PageTitle>{ history.location.pathname.split('/').length > 3 && <span onClick={() => history.push('/app/market')} className='text-sm cursor-pointer'>{`<< Collection`}</span>}{ accountId && ` Welcome ${accountId}`}</PageTitle>
 				<Button className='' onClick={accountId? handleSignOut : showModal}>{
@@ -123,15 +149,15 @@ const MarketContent: React.FC = () => {
 
 							<div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
 								{
+									loading && <div>Loading...</div>
+								}
+								{
 									collections.map(collection => 
 										<div>
-											<CollectionCard title={collection.name} ownerId={collection.owner_id} price="666" supply="356" maxSupply="10000" imageUri={collection.icon} ></CollectionCard>
+											<CollectionCard title={collection.name} ownerId={collection.owner_id} price={ collection.floor_price ? utils.format.formatNearAmount(collection.floor_price) : "0"} supply={ collection.total_cards_sale.toString()} maxSupply={ ( collection.total_cards_sale + collection.total_cards_not_sale).toString() } imageUri={collection.icon} ></CollectionCard>
 										</div> )
 								}
 								
-								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/188.png'} ></CollectionCard>
-								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/188.png'} ></CollectionCard>
-								<CollectionCard title="EvilDegen" ownerId="Evil Degen NFT" price="666" supply="356" maxSupply="10000" imageUri={'assets/188.png'} ></CollectionCard>
 							</div>
 						</div>
 					} />

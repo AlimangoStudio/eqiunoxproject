@@ -1,6 +1,7 @@
 import React, { ReactSVGElement} from 'react'
 import { Card, CardBody } from '@windmill/react-ui'
 import { useHistory } from 'react-router-dom'
+import { NFT_CONTRACT_IDS } from '../../constants/address'
 
 interface ICollectionCard{
   imageUri: string
@@ -16,7 +17,10 @@ function CollectionCard({ imageUri, title, ownerId, price, maxSupply, supply, ch
 
   const history = useHistory()
   const onNavigate = () => {
-    history.push(`/app/market/${ownerId}`)
+    if ( NFT_CONTRACT_IDS.includes(ownerId)) {
+      history.push(`/app/market/${ownerId}`)
+    }
+   
   }
 
   return (
