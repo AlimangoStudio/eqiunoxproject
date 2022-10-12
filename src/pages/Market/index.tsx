@@ -100,29 +100,38 @@ const MarketContent: React.FC = () => {
 		// Get CollectionMetadatas 
 		const getCollectionMetadatas = async () => {
 			setLoading(true)
-			try {
-				let collections =  await Bluebird.map(NFT_CONTRACT_IDS , (id: string) => getCollectionMetadata(id))
-				setCollections(collections)
-			} catch (error) {
-				console.log(error)
-			} 
+			let nCollections: NftMetadata[]
+			let collections =  await Bluebird.map(NFT_CONTRACT_IDS , (id: string) => getCollectionMetadata(id)) as [NftMetadata]
+			nCollections = collections.map(collection => {
+				collection.floor_price = "1700000000000000000000000"
+				collection.total_cards_sale = 2
+				collection.total_cards_not_sale = 5
+				return collection
+
+			})
+				
+			
 			let res = await axios.get('https://api-v2-mainnet.paras.id/collections', { params: {}})
 			let parasCollections = await Bluebird.map(res.data.data.results, async (collection: ParasCollectionMetadata) => {
 				let response = await axios.get("https://api-v2-mainnet.paras.id/collection-stats", {params: {collection_id: collection.collection_id}})
 				let stat: ParasCollectionStat = response.data.data.results
+				let icon = collection.cover? collection.cover: collection.media
 				let result: NftMetadata = {
 					name: collection.collection,
 					symbol: collection.collection,
 					owner_id: collection.creator_id,
-					icon: "https://".concat(collection.media.concat('.ipfs.dweb.link')),
+					icon: icon? "https://".concat(icon.concat('.ipfs.dweb.link')) : "",
 					floor_price: stat.floor_price,
 					total_cards_not_sale: stat.total_card_not_sale,
 					total_cards_sale: stat.total_card_sale
 				} 
 				return result
 			})
-			setCollections([...collections, ...parasCollections])
+			console.log('--- collections', collections)
+			setCollections([...nCollections, ...parasCollections])
 			setLoading(false)
+			
+			
 		}
 		getCollectionMetadatas()
 
@@ -153,7 +162,7 @@ const MarketContent: React.FC = () => {
 								}
 								{
 									collections.map(collection => 
-										<div>
+										<div key={collection.name}>
 											<CollectionCard title={collection.name} ownerId={collection.owner_id} price={ collection.floor_price ? utils.format.formatNearAmount(collection.floor_price) : "0"} supply={ collection.total_cards_sale.toString()} maxSupply={ ( collection.total_cards_sale + collection.total_cards_not_sale).toString() } imageUri={collection.icon} ></CollectionCard>
 										</div> )
 								}

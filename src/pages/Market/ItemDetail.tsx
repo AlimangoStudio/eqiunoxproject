@@ -60,7 +60,7 @@ function ItemDetail() {
 					],
 				})
 				.catch((err) => {
-					throw err;
+					console.log("error:", err)
 				});
 
 		},
@@ -138,6 +138,9 @@ function ItemDetail() {
 	return (
 		
 		<div className='mt-12'>
+			{
+				!item && <div>Loading...</div>
+			}
 			{ item &&
 
 			<div className='grid grid-cols-5 grid-rows-2 md:grid-rows-1 gap-4'>
@@ -164,7 +167,7 @@ function ItemDetail() {
 															<p className="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-200 ">Current Price</p>
 															<div className='flex justify-between items-center'>
 																<p className="text-sm font-medium text-gray-700 dark:text-gray-200">{utils.format.formatNearAmount(item.sale_conditions)} <img src='/assets/near.png' className='w-6 h-6 inline mb-1'/></p>
-																<div className='flex justify-center'><Button onClick={() => openModal()} size="small" className="w-full">Update Price</Button></div>
+																<div className='flex justify-center'><Button disabled={!accountId} onClick={() => openModal()} size="small" className="w-full">Update Price</Button></div>
 																{/* Modal */}
 																<Modal isOpen={isModalOpen} onClose={closeModal}>
 																	<ModalHeader>Update Price</ModalHeader>
@@ -197,7 +200,7 @@ function ItemDetail() {
 																</Modal>
 																{/* Modal end */}
 															</div>
-															<div className='flex justify-center mt-4'><Button onClick={() => onRemoveSale()} size="large" className="w-full">Remove Sale</Button></div>
+															<div className='flex justify-center mt-4'><Button disabled={!accountId} onClick={() => onRemoveSale()} size="large" className="w-full">Remove Sale</Button></div>
 														</div>
 														:
 														<div>
@@ -212,10 +215,10 @@ function ItemDetail() {
 																<div className='flex justify-between items-center'>
 																	
 																	<Input value={deposit} onChange={ e =>  onChangeDeposit(e)} css="" className="w-12 mr-4" placeholder="" />
-																	<Button onClick={() => onDeposit()} size="large" className="w-full">Deposit</Button>
+																	<Button disabled={!accountId} onClick={() => onDeposit()} size="large" className="w-full">Deposit</Button>
 																</div>
 															}
-															<div className='flex justify-center mt-4'><Button onClick={() => openListModal()} size="large" className="w-full">List</Button></div>
+															<div className='flex justify-center mt-4'><Button disabled={!accountId} onClick={() => openListModal()} size="large" className="w-full">List</Button></div>
 															{/* Modal */}
 															<Modal isOpen={isListModalOpen} onClose={closeModal}>
 																	<ModalHeader>List Item</ModalHeader>
@@ -254,7 +257,7 @@ function ItemDetail() {
 											<div>
 												<p className="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-200">Current Price</p>
 												<p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{item && utils.format.formatNearAmount(item.sale_conditions)} <img src='/assets/near.png' className='w-6 h-6 inline mb-1'/></p>
-												<div className='flex justify-center mt-4'><Button onClick={() => onOffer()} size="large" className="w-full">Buy</Button></div>
+												<div className='flex justify-center mt-4'><Button disabled={!accountId} onClick={() => onOffer()} size="large" className="w-full">Buy</Button></div>
 											</div>
 									}
 
