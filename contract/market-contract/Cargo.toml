@@ -1,0 +1,19 @@
+[package]
+name = "market-contract"
+version = "1.0.0"
+authors = ["Phant Inc <hashgraph07@gmail.com>"]
+edition = "2022"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+near-sdk = "4.0.0"
+
+[profile.release]
+codegen-units=1
+opt-level = "z"
+lto = true
+debug = false
+panic = "abort"
+overflow-checks = true
