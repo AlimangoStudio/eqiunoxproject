@@ -98,7 +98,7 @@ function ItemDetail() {
 	}
 
 	const onDeposit = async () => {
-		nearCall({account_id: accountId}, "stroage_deposit", utils.format.parseNearAmount(deposit)!)
+		nearCall({account_id: accountId}, "storage_deposit", utils.format.parseNearAmount(deposit)!)
 	}
 
 	const onChangePrice = (e: any) => {
