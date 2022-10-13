@@ -211,7 +211,7 @@ function ItemDetail() {
 																
 															</Label>
 															{
-																Number(storageBalance) > 0.1 &&
+																Number(storageBalance) >= 0 &&
 																<div className='flex justify-between items-center'>
 																	
 																	<Input value={deposit} onChange={ e =>  onChangeDeposit(e)} css="" className="w-12 mr-4" placeholder="" />
