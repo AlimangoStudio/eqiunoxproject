@@ -115,7 +115,7 @@ const MarketContent: React.FC = () => {
 			let parasCollections = await Bluebird.map(res.data.data.results, async (collection: ParasCollectionMetadata) => {
 				let response = await axios.get("https://api-v2-mainnet.paras.id/collection-stats", {params: {collection_id: collection.collection_id}})
 				let stat: ParasCollectionStat = response.data.data.results
-				let icon = collection.cover? collection.cover: collection.media
+				let icon = collection.media? collection.media: collection.cover
 				let result: NftMetadata = {
 					name: collection.collection,
 					symbol: collection.collection,
