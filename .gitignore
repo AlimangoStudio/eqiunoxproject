@@ -36,3 +36,5 @@ yarn-error.log*
 /src/assets/css/tailwind.output.css
 Dockerfile
 .devcontainer
+
+.idea
