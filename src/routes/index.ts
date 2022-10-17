@@ -13,6 +13,7 @@ const Modals = lazy(() => import('../pages/Modals'));
 const Tables = lazy(() => import('../pages/Tables'));
 const Page404 = lazy(() => import('../pages/404'));
 const Blank = lazy(() => import('../pages/Blank'));
+const NftPack = lazy(() => import('../pages/NftPack'));
 
 /**
  * ⚠ These are internal routes!
@@ -36,6 +37,10 @@ const routes = [
   {
     path: '/market', // the url
     component: Market, // view rendered
+  },
+  {
+    path: '/nft-pack', // the url
+    component: NftPack, // view rendered
   },
   {
     path: '/dashboard', // the url

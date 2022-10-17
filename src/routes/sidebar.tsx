@@ -31,6 +31,11 @@ const routes: IRoute[] = [
     name: 'Marketplace',
   },
   {
+    path: '/app/nft-pack',
+    icon: 'CardsIcon',
+    name: 'NFT Pack Mint',
+  },
+  {
     path: '/app/dashboard', // the url
     icon: 'HomeIcon', // the component being exported from icons/index.js
     name: 'Dashboard', // name that appear in Sidebar
