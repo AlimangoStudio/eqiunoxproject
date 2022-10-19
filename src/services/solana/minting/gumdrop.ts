@@ -21,7 +21,7 @@ import {
   TOKEN_PROGRAM_ID,
 } from "./ids";
 import * as anchor from "@project-serum/anchor";
-import { MerkleTree } from "./merkleTree";
+import { MerkleTree } from "./merkle-tree";
 import { MintLayout, Token } from "@solana/spl-token";
 import * as bs58 from "bs58";
 import { sendSignedTransaction } from "./connection";

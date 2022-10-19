@@ -1,9 +1,9 @@
 import React from 'react';
 
-import PageTitle from '../components/Typography/PageTitle';
-
-import booster from '../assets/img/booster.jpg';
-import { Button } from '@windmill/react-ui';
+import PageTitle from '../../components/Typography/PageTitle';
+import booster from '../../assets/img/booster.jpg';
+import CandyMachine from '../../components/Solana/CandyMachine';
+import * as gumdrop from './gumdrop.json';
 
 function NftPack() {
   return (
@@ -24,9 +24,12 @@ function NftPack() {
             </div>
           </div>
           <div className="flex items-center justify-center">
-            <Button>
-              Mint NFT Pack
-            </Button>
+            <CandyMachine
+                            candyMachineId="BaDQZbv1pjj4XSun6iizfha1xcRojTtX7gCLEf4XQnur"
+                            whitelist={gumdrop}
+                            whitelistMint="DqEXaNpbF9cpvKgW6oyezdequozXAFNTn2aJWQVJrC5A"
+                            name={'XHEN'}
+                        />
           </div>
         </div>
     </>
