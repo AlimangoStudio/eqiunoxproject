@@ -1,30 +1,5 @@
 import Countdown from 'react-countdown';
 import React from 'react';
-import { createStyles, Paper, Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      padding: '0px',
-      '& > *': {
-        margin: '3.2px',
-        width: '48px',
-        height: '48px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignContent: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#384457',
-        color: 'white',
-        borderRadius: 5,
-        fontSize: 10,
-      },
-    },
-  })
-);
 
 interface MintCountdownProps {
   date: Date | undefined;
@@ -47,7 +22,6 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
   style,
   onComplete,
 }) => {
-  const classes = useStyles();
   const renderCountdown = ({
     days,
     hours,
@@ -59,16 +33,15 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
     if (completed) {
       return status ? <span className="flex mb-1 h-7 p-2 flex-col items-center content-center justify-center bg-gray-700 text-white rounded-md font-bold text-lg">{status}</span> : null;
     } else {
-      const itemClassName = "font-bold text-lg";
-      const root = "flex p-0";
+      const itemClassName = "font-bold text-lg m-1 w-12 h-12 flex flex-col content-center items-center justify-center bg-gray-700 text-white rounded-md";
 
       return (
-        <div className={classes.root} style={style}>
+        <div className="flex p-0" style={style}>
           <div className={itemClassName}>
             <span>
               {hours < 10 ? `0${hours}` : hours}
             </span>
-            <span>hrs</span>
+            <span className=''>hrs</span>
           </div>
           <div className={itemClassName}>
             <span>

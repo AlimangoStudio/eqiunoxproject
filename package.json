@@ -61,6 +61,7 @@
     "@svgr/webpack": "5.4.0",
     "@types/bn.js": "^5.1.1",
     "@types/classnames": "^2.3.1",
+    "@types/react-alert": "^7.0.2",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.2.6",

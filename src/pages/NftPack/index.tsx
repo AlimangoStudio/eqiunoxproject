@@ -4,6 +4,7 @@ import PageTitle from '../../components/Typography/PageTitle';
 import booster from '../../assets/img/booster.jpg';
 import CandyMachine from '../../components/Solana/CandyMachine';
 import * as gumdrop from './gumdrop.json';
+import { MintCountdown } from '../../components/Solana/MintCountdown';
 
 function NftPack() {
   return (
@@ -30,6 +31,7 @@ function NftPack() {
                             whitelistMint="DqEXaNpbF9cpvKgW6oyezdequozXAFNTn2aJWQVJrC5A"
                             name={'XHEN'}
                         />
+                        <MintCountdown date={new Date()}/>
           </div>
         </div>
     </>

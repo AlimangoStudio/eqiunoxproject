@@ -553,55 +553,31 @@ const Machine = (props: MachineProps) => {
 
   useInterval(() => {
     refreshCandyMachineState()
-  }, [20000]);
+  }, 20000);
 
   return (
     <>
       {!wallet.connected ? (
-        <Grid container direction="row" justifyContent="center" wrap="nowrap">
+        <div className='grid container content-center flex-nowrap'>
           <WalletMultiButton />
-        </Grid>
+        </div>
       ) : (
         <>
           {candyMachine && (
             <>
-              <Container maxWidth="xs" style={{ position: 'relative' }}>
-                <Paper
-                  style={{
-                    padding: 25,
-                    backgroundColor: '#151A1F',
-                    borderRadius: 6,
-                    marginTop: '10px',
-                  }}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    md={12}
-                    style={{
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      display: 'flex',
-                    }}
-                  >
-                    <Grid>
-                      <Typography variant="body2" align="left">
+              <div className='max-w-xs relative'>
+                <div className='p-6 bg-gray-800 rounded-md mt-3'>
+                  <div className='flex justify-between items-center'>
+                    <div>
+                      <p>
                         {startDate}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        align="left"
-                        style={{
-                          textTransform: 'uppercase',
-                          fontWeight: 'bold',
-                          marginTop: '5px',
-                          marginBottom: '5px',
-                          color: 'white',
-                        }}
+                      </p>
+                      <div
+                        className='uppercase font-bold text-white my-1 text-lg'
                       >
                         {props.name}
-                      </Typography>
-                      <Typography variant="body2" align="left">
+                      </div>
+                      <p>
                         {candyMachine.state.goLiveDate &&
                           new Date(Date.now()) >
                             toDate(candyMachine.state.goLiveDate)! &&
@@ -633,15 +609,15 @@ const Machine = (props: MachineProps) => {
                           (endDate && Date.now() > endDate.getTime())) && (
                           <>Finsihed!</>
                         )}
-                      </Typography>
-                    </Grid>
-                    <Grid>
+                      </p>
+                    </div>
+                    <div>
                       {candyMachine.state.goLiveDate &&
                         new Date(Date.now()) >
                           toDate(candyMachine.state.goLiveDate)! &&
                         (!endDate || Date.now() < endDate.getTime()) && (
                           <>
-                            <ListItem
+                            <li
                               style={{
                                 display: 'item',
                                 textAlign: 'right',
@@ -679,14 +655,14 @@ const Machine = (props: MachineProps) => {
                                   Live
                                 </span>
                               </div>
-                            </ListItem>
+                            </li>
                           </>
                         )}
                       {candyMachine.state.goLiveDate &&
                         new Date(Date.now()) <
                           toDate(candyMachine.state.goLiveDate)! && (
                           <>
-                            <ListItem
+                            <li
                               style={{
                                 display: 'item',
                                 textAlign: 'right',
@@ -724,13 +700,13 @@ const Machine = (props: MachineProps) => {
                                   Soon
                                 </span>
                               </div>
-                            </ListItem>
+                            </li>
                           </>
                         )}
                       {(candyMachine?.state?.isSoldOut ||
                         (endDate && Date.now() > endDate.getTime())) && (
                         <>
-                          <ListItem
+                          <li
                             style={{
                               display: 'item',
                               textAlign: 'right',
@@ -764,42 +740,29 @@ const Machine = (props: MachineProps) => {
                                 Completed
                               </span>
                             </div>
-                          </ListItem>
+                          </li>
                         </>
                       )}
-                      <Typography
-                        variant="h6"
-                        align="right"
-                        style={{
-                          textTransform: 'uppercase',
-                          fontWeight: 'bold',
-                          marginTop: '5px',
-                          marginBottom: '5px',
-                          color: 'white',
-                        }}
+                      <p
+                        className='text-right uppercase font-bold my-1 text-white'
                       >
                         {isWhitelistUser && discountPrice
                           ? ` ${formatNumber.asNumber(discountPrice)} sol`
                           : ` ${formatNumber.asNumber(
                               candyMachine.state.price
                             )} sol`}
-                      </Typography>
-                      <Typography variant="body2" align="right">
+                      </p>
+                      <p className='text-right'>
                         {`${(
                           100 -
                           (itemsRemaining! / itemsAvailable!) * 100
                         ).toFixed(0)} % minted`}
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                      </p>
+                    </div>
+                  </div>
                   {isActive && (
-                    <Grid
-                      container
-                      spacing={0}
-                      direction="column"
-                      alignItems="center"
-                      justifyContent="center"
-                      paddingTop={'10px'}
+                    <div
+                      className='container flex flex-col items-center justify-center pt-3'
                     >
                       <MintButton
                         candyMachine={candyMachine}
@@ -810,17 +773,13 @@ const Machine = (props: MachineProps) => {
                           (isPresale && isWhitelistUser && isValidBalance)
                         }
                       />
-                    </Grid>
+                    </div>
                   )}
                   {useWhitelist &&
                     (!endDate || Date.now() < endDate.getTime()) && (
                       <>
-                        <Grid
-                          container
-                          spacing={0}
-                          direction="column"
-                          alignItems="center"
-                          justifyContent="center"
+                        <div
+                          className='container flex flex-col items-center justify-center'
                         >
                           {isWhitelistUser && (
                             <div
@@ -849,11 +808,11 @@ const Machine = (props: MachineProps) => {
                               You are not on the whitelist!
                             </div>
                           )}
-                        </Grid>
+                        </div>
                       </>
                     )}
-                </Paper>
-              </Container>
+                </div>
+              </div>
             </>
           )}
         </>
