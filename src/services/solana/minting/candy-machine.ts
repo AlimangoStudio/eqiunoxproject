@@ -8,7 +8,6 @@ import {
   SYSVAR_SLOT_HASHES_PUBKEY,
 } from "@solana/web3.js";
 import { sendTransactions, SequenceType } from "./connection";
-
 import {
   CIVIC,
   getAtaForMint,
@@ -299,6 +298,7 @@ export type SetupState = {
 };
 
 export const createAccountsForMint = async (
+  wallet: anchor.Wallet,
   candyMachine: CandyMachineAccount,
   payer: anchor.web3.PublicKey
 ): Promise<SetupState> => {
@@ -348,7 +348,7 @@ export const createAccountsForMint = async (
     transaction: (
       await sendTransactions(
         candyMachine.program.provider.connection,
-        candyMachine.program.provider.wallet,
+        wallet,
         [instructions],
         [signers],
         SequenceType.StopOnFailure,
@@ -369,6 +369,7 @@ type MintResult = {
 };
 
 export const mintOneToken = async (
+  wallet: anchor.Wallet,
   candyMachine: CandyMachineAccount,
   payer: anchor.web3.PublicKey,
   beforeTransactions: Transaction[] = [],
@@ -582,7 +583,7 @@ export const mintOneToken = async (
     const txns = (
       await sendTransactions(
         candyMachine.program.provider.connection,
-        candyMachine.program.provider.wallet,
+        wallet,
         instructionsMatrix,
         signersMatrix,
         SequenceType.StopOnFailure,

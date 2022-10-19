@@ -14,6 +14,7 @@ import {
 } from "@solana/web3.js";
 
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
+import anchor, { Provider } from "@project-serum/anchor";
 
 interface BlockhashAndFeeCalculator {
   blockhash: Blockhash;
@@ -127,13 +128,14 @@ export async function sendTransactionsWithManualRetry(
 
 export const sendTransactions = async (
   connection: Connection,
-  wallet: any,
+  wallet: anchor.Wallet,
   instructionSet: TransactionInstruction[][],
   signersSet: Keypair[][],
   sequenceType: SequenceType = SequenceType.Parallel,
   commitment: Commitment = "singleGossip",
   successCallback: (txid: string, ind: number) => void = (txid, ind) => {},
-  failCallback: (reason: string, ind: number) => boolean = (txid, ind) => false,
+  failCallback: (reason: Transaction, ind: number) => boolean = (txid, ind) =>
+    false,
   block?: BlockhashAndFeeCalculator,
   beforeTransactions: Transaction[] = [],
   afterTransactions: Transaction[] = []
@@ -172,10 +174,10 @@ export const sendTransactions = async (
   unsignedTxns.push(...afterTransactions);
 
   const partiallySignedTransactions = unsignedTxns.filter((t) =>
-    t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey))
+    t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey!))
   );
   const fullySignedTransactions = unsignedTxns.filter(
-    (t) => !t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey))
+    (t) => !t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey!))
   );
   let signedTxns = await wallet.signAllTransactions(
     partiallySignedTransactions
@@ -550,7 +552,6 @@ async function awaitTransactionSignatureConfirmation(
   console.log("Returning status", status);
   return status;
 }
-
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

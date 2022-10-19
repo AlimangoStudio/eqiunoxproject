@@ -26,7 +26,7 @@ import {
   getCollectionPDA,
   mintOneToken,
   SetupState,
-} from "../../../services/solana/candy-machine";
+} from "../../../services/solana/minting/candy-machine";
 import { MintButton } from "../MintButton";
 import { MintCountdown } from "../MintCountdown";
 import { AlertState, formatNumber, getAtaForMint, toDate } from "../utils";
