@@ -26,17 +26,16 @@ import {
   getCollectionPDA,
   mintOneToken,
   SetupState,
-} from "../candy-machine";
+} from "../../../services/solana/candy-machine";
 import { MintButton } from "../MintButton";
 import { MintCountdown } from "../MintCountdown";
 import { AlertState, formatNumber, getAtaForMint, toDate } from "../utils";
 import Wallet from "../Wallet";
 import styled from "styled-components";
 import { number } from "prop-types";
-import { GUMDROP_DISTRIBUTOR_ID, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID, TOKEN_PROGRAM_ID } from "../ids";
-import { MerkleTree } from "../merkleTree";
-import Gumdrop from "../Gumdrop/gumdrop";
-import { DragHandle } from "@material-ui/icons";
+import { GUMDROP_DISTRIBUTOR_ID, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID, TOKEN_PROGRAM_ID } from "../../../constants/solana";
+import { MerkleTree } from "../../services/solana/merkleTree";
+import Gumdrop from "../../../services/solana/gumdrop";
 
 
 interface WhitelistEntries {
