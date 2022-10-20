@@ -110,7 +110,7 @@ const MarketContent: React.FC = () => {
 
 			})
 				
-			
+			setCollections([...nCollections])
 			let res = await axios.get('https://api-v2-mainnet.paras.id/collections', { params: {}})
 			let parasCollections = await Bluebird.map(res.data.data.results, async (collection: ParasCollectionMetadata) => {
 				let response = await axios.get("https://api-v2-mainnet.paras.id/collection-stats", {params: {collection_id: collection.collection_id}})
