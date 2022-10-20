@@ -5,6 +5,7 @@ const Home = lazy(() => import('../pages/Home'))
 const LaunchPad = lazy(() => import('../pages/LaunchPad'))
 const Market = lazy(() => import('../pages/Market'))
 const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Staking = lazy(() => import('../pages/Staking'));
 const Forms = lazy(() => import('../pages/Forms'));
 const Cards = lazy(() => import('../pages/Cards'));
 const Charts = lazy(() => import('../pages/Charts'));
@@ -40,6 +41,10 @@ const routes = [
   {
     path: '/dashboard', // the url
     component: Dashboard, // view rendered
+  },
+  {
+    path: '/staking', // the url
+    component: Staking, // view rendered
   },
   {
     path: '/forms',

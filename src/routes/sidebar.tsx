@@ -36,6 +36,11 @@ const routes: IRoute[] = [
     name: 'Dashboard', // name that appear in Sidebar
   },
   {
+    path: '/app/staking', // the url
+    icon: 'MoneyIcon', // the component being exported from icons/index.js
+    name: 'Staking', // name that appear in Sidebar
+  },
+  {
     path: '/app/forms',
     icon: 'FormsIcon',
     name: 'Forms',
