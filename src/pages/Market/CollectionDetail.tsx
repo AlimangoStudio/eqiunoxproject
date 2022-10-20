@@ -103,7 +103,7 @@ function CollectionDetail() {
                                     <div className='ml-4 col-span-2 flex flex-col justify-around'>
                                         <div className='flex flex-col justify-center dark:text-white'>
                                             <h1>{contract?.name}</h1>
-                                            <p className='text-sm font-medium'>By <b>{contract?.owner_id}</b></p>
+                                            <p className='text-sm font-medium'>By <b>{id}</b></p>
                                         </div>
                                         <p className='my-2 text-sm font-medium text-gray-600 dark:text-gray-400'>{description}</p>
                                         <div className='grid md:grid-cols-3 grid-cols-2 gap-1'>

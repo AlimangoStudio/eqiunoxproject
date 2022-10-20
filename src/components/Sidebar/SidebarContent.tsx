@@ -16,8 +16,8 @@ function Icon({ icon, ...props }: IIcon){
 function SidebarContent() {
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
-      <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="/#">
-        Equinox
+      <a className="ml-6 d-block text-lg font-bold text-gray-800 dark:text-gray-200" href="/#">
+        <img className='w-24' src='/assets/text_logo.png'></img>
       </a>
       <ul className="mt-6">
         {routes.map((route) =>
