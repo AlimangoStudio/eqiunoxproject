@@ -10,6 +10,7 @@ import { Windmill } from '@windmill/react-ui'
 import * as serviceWorker from './serviceWorker'
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
+import { AppWalletProvider } from './context/solana/AppWalletProvider';
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const axe = require('react-axe')
@@ -30,7 +31,9 @@ ReactDOM.render(
     <Suspense fallback={<ThemedSuspense />}>
       <Windmill usePreferences>
         <AlertProvider template={AlertTemplate} {...options}>
-          <App />
+          <AppWalletProvider>
+            <App />
+          </AppWalletProvider>
         </AlertProvider>
       </Windmill>
     </Suspense>

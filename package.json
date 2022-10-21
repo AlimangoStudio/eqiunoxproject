@@ -76,6 +76,10 @@
     "tailwindcss": "^2.1.4",
     "typescript": "^4.3.2"
   },
+  "resolutions": {
+    "@ledgerhq/hw-transport": "6.27.1",
+    "@ledgerhq/hw-transport-webhid": "6.27.1"
+  },
   "keywords": [
     "windmill",
     "dashboard",
