@@ -1,5 +1,4 @@
 import * as anchor from '@project-serum/anchor';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
   useAnchorWallet,
   useConnection,
@@ -7,16 +6,9 @@ import {
 } from '@solana/wallet-adapter-react';
 import {
   Commitment,
-  Connection,
-  Keypair,
-  PublicKey,
-  SystemProgram,
   Transaction,
-  TransactionInstruction,
 } from '@solana/web3.js';
 import {
-  Dispatch,
-  SetStateAction,
   useCallback,
   useEffect,
   useMemo,
@@ -34,17 +26,10 @@ import {
 import { MintButton } from '../MintButton';
 import { MintCountdown } from '../MintCountdown';
 import {
-  AlertState,
   formatNumber,
   getAtaForMint,
   toDate,
 } from '../../../services/solana/minting/utils';
-import {
-  GUMDROP_DISTRIBUTOR_ID,
-  SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
-  TOKEN_PROGRAM_ID,
-} from '../../../services/solana/minting/ids';
-import { MerkleTree } from '../../../services/solana/minting/merkle-tree';
 import Gumdrop from '../../../services/solana/minting/gumdrop';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useInterval } from '../../../hooks/useInterval';
@@ -87,8 +72,8 @@ const getCountdownDate = (
     candyMachine.state.goLiveDate
       ? candyMachine.state.goLiveDate
       : candyMachine.state.isPresale
-      ? new anchor.BN(new Date().getTime() / 1000)
-      : undefined
+        ? new anchor.BN(new Date().getTime() / 1000)
+        : undefined
   );
 };
 
@@ -558,264 +543,149 @@ const Machine = (props: MachineProps) => {
   return (
     <>
       {!wallet.connected ? (
-        <div className='grid container content-center flex-nowrap'>
+        <div className='w-96 grid container content-center flex-nowrap'>
           <WalletMultiButton />
         </div>
       ) : (
-        <>
-          {candyMachine && (
-            <>
-              <div className='max-w-xs relative'>
-                <div className='p-6 bg-gray-800 rounded-md mt-3'>
-                  <div className='flex justify-between items-center'>
-                    <div>
-                      <p>
-                        {startDate}
-                      </p>
-                      <div
-                        className='uppercase font-bold text-white my-1 text-lg'
-                      >
-                        {props.name}
-                      </div>
-                      <p>
-                        {candyMachine.state.goLiveDate &&
-                          new Date(Date.now()) >
-                            toDate(candyMachine.state.goLiveDate)! &&
-                          (!endDate || Date.now() < endDate.getTime()) && (
-                            <>{itemsAvailable} Supply</>
-                          )}
-                        {candyMachine.state.goLiveDate &&
-                          new Date(Date.now()) <
-                            toDate(candyMachine.state.goLiveDate)! && (
-                            <MintCountdown
-                              key="goLive"
-                              date={getCountdownDate(candyMachine)}
-                              style={{
-                                justifyContent: 'flex-end',
-                                color: 'white',
-                              }}
-                              status={
-                                candyMachine?.state?.isSoldOut ||
-                                (endDate && Date.now() > endDate.getTime())
-                                  ? 'COMPLETED'
-                                  : isPresale
-                                  ? 'PRESALE'
-                                  : 'LIVE'
-                              }
-                              onComplete={toggleMintButton}
-                            />
-                          )}
-                        {(candyMachine?.state?.isSoldOut ||
-                          (endDate && Date.now() > endDate.getTime())) && (
-                          <>Finsihed!</>
-                        )}
-                      </p>
-                    </div>
-                    <div>
-                      {candyMachine.state.goLiveDate &&
-                        new Date(Date.now()) >
-                          toDate(candyMachine.state.goLiveDate)! &&
-                        (!endDate || Date.now() < endDate.getTime()) && (
-                          <>
-                            <li
-                              style={{
-                                display: 'item',
-                                textAlign: 'right',
-                                padding: 0,
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'flex-end',
-                                  width: '100%',
-                                }}
-                              >
-                                <div style={{ position: 'absolute' }}>
-                                  <div
-                                    style={{
-                                      position: 'relative',
-                                      right: '40px',
-                                      bottom: '5px',
-                                      fontSize: '3em',
-                                      color: '#00B332',
-                                    }}
-                                  >
-                                    &bull;
-                                  </div>
-                                </div>
-                                <span
-                                  style={{
-                                    height: '20px',
-                                    alignSelf: 'center',
-                                    color: 'white',
-                                  }}
-                                >
-                                  Live
-                                </span>
-                              </div>
-                            </li>
-                          </>
-                        )}
-                      {candyMachine.state.goLiveDate &&
-                        new Date(Date.now()) <
-                          toDate(candyMachine.state.goLiveDate)! && (
-                          <>
-                            <li
-                              style={{
-                                display: 'item',
-                                textAlign: 'right',
-                                padding: 0,
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'flex-end',
-                                  width: '100%',
-                                }}
-                              >
-                                <div style={{ position: 'absolute' }}>
-                                  <div
-                                    style={{
-                                      position: 'relative',
-                                      right: '50px',
-                                      bottom: '5px',
-                                      fontSize: '3em',
-                                      color: 'white',
-                                    }}
-                                  >
-                                    &bull;
-                                  </div>
-                                </div>
-                                <span
-                                  style={{
-                                    height: '20px',
-                                    alignSelf: 'center',
-                                    color: 'white',
-                                  }}
-                                >
-                                  Soon
-                                </span>
-                              </div>
-                            </li>
-                          </>
-                        )}
-                      {(candyMachine?.state?.isSoldOut ||
-                        (endDate && Date.now() > endDate.getTime())) && (
-                        <>
-                          <li
-                            style={{
-                              display: 'item',
-                              textAlign: 'right',
-                              padding: 0,
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'flex-end',
-                                width: '100%',
-                              }}
-                            >
-                              <div style={{ position: 'absolute' }}>
-                                <div
-                                  style={{
-                                    position: 'relative',
-                                    right: '93px',
-                                    bottom: '5px',
-                                    fontSize: '3em',
-                                    color: 'white',
-                                  }}
-                                >
-                                  &bull;
-                                </div>
-                              </div>
-                              <span
-                                style={{ height: '20px', alignSelf: 'center' }}
-                              >
-                                Completed
-                              </span>
-                            </div>
-                          </li>
-                        </>
-                      )}
-                      <p
-                        className='text-right uppercase font-bold my-1 text-white'
-                      >
-                        {isWhitelistUser && discountPrice
-                          ? ` ${formatNumber.asNumber(discountPrice)} sol`
-                          : ` ${formatNumber.asNumber(
-                              candyMachine.state.price
-                            )} sol`}
-                      </p>
-                      <p className='text-right'>
-                        {`${(
-                          100 -
-                          (itemsRemaining! / itemsAvailable!) * 100
-                        ).toFixed(0)} % minted`}
-                      </p>
-                    </div>
-                  </div>
-                  {isActive && (
-                    <div
-                      className='container flex flex-col items-center justify-center pt-3'
-                    >
-                      <MintButton
-                        candyMachine={candyMachine}
-                        isMinting={isUserMinting}
-                        onMint={onMint}
-                        isActive={
-                          isActive ||
-                          (isPresale && isWhitelistUser && isValidBalance)
+        <div className=''>
+          <div className='p-6 bg-gray-800 rounded-md mt-3 flex flex-col w-96'>
+            {!candyMachine && (
+              <div className='text-center text-white font-bold'>Loading ...</div>
+            )}
+            {candyMachine && (
+              <div className='grid grid-cols-2 place-content-between text-white'>
+                <div>
+                  {startDate}
+                </div>
+                <div className='text-right'>
+                  {!candyMachine?.state?.isSoldOut && candyMachine.state.goLiveDate &&
+                    new Date(Date.now()) >
+                    toDate(candyMachine.state.goLiveDate)! &&
+                    (!endDate || Date.now() < endDate.getTime()) && (
+                      <span className='text-green-400'>
+                        <span className='relative'>
+                          <b className='right-2 -top-5 text-5xl absolute'>&bull;</b>
+                        </span>
+                        <b>Live</b>
+                      </span>
+                    )}
+                  {candyMachine.state.goLiveDate &&
+                    new Date(Date.now()) <
+                    toDate(candyMachine.state.goLiveDate)! && (
+                      <span className='text-gray-400'>
+                        &bull;
+                        Soon
+                      </span>
+                    )}
+                  {(candyMachine?.state?.isSoldOut ||
+                    (endDate && Date.now() > endDate.getTime())) && (
+                      <span className='text-gray-400'>
+                        <span className='relative'>
+                          <b className='right-2 -top-5 text-5xl absolute'>&bull;</b>
+                        </span>
+                        <b>Completed</b>
+                      </span>
+                    )}
+                </div>
+                <div
+                  className='uppercase font-bold text-white my-1 text-lg'
+                >
+                  {props.name}
+                </div>
+                <div
+                  className='text-right uppercase font-bold my-1 text-lg text-white'
+                >
+                  {isWhitelistUser && discountPrice
+                    ? ` ${formatNumber.asNumber(discountPrice)} sol`
+                    : ` ${formatNumber.asNumber(
+                      candyMachine.state.price
+                    )} sol`}
+                </div>
+
+                {/* <div>
+                {candyMachine.state.goLiveDate &&
+                  new Date(Date.now()) >
+                  toDate(candyMachine.state.goLiveDate)! &&
+                  (!endDate || Date.now() < endDate.getTime()) && (
+                    <>{itemsAvailable} Supply</>
+                  )}
+                {(candyMachine?.state?.isSoldOut ||
+                  (endDate && Date.now() > endDate.getTime())) && (
+                    <>Finsihed!</>
+                  )}
+              </div> */}
+                {/* <div> */}
+                {/* <p className='text-right'>
+                  {`${(
+                    100 -
+                    (itemsRemaining! / itemsAvailable!) * 100
+                  ).toFixed(0)} % minted`}
+                </p> */}
+                {/* </div> */}
+
+                {candyMachine.state.goLiveDate &&
+                  new Date(Date.now()) <
+                  toDate(candyMachine.state.goLiveDate)! && (
+                    <div className='pt-4 flex justify-center col-span-2'>
+                      <MintCountdown
+                        key="goLive"
+                        date={getCountdownDate(candyMachine)}
+                        status={
+                          candyMachine?.state?.isSoldOut ||
+                            (endDate && Date.now() > endDate.getTime())
+                            ? 'COMPLETED'
+                            : isPresale
+                              ? 'PRESALE'
+                              : 'LIVE'
                         }
+                        onComplete={toggleMintButton}
                       />
                     </div>
                   )}
-                  {useWhitelist &&
-                    (!endDate || Date.now() < endDate.getTime()) && (
-                      <>
-                        <div
-                          className='container flex flex-col items-center justify-center'
-                        >
-                          {isWhitelistUser && (
-                            <div
-                              style={{
-                                fontSize: '0.7em',
-                                marginTop: '15px',
-                                color: 'gray',
-                              }}
-                            >
-                              You are on the whitelist!{' '}
-                              {mintsLeft > 0 ? (
-                                <>You can still mint up to {mintsLeft} token.</>
-                              ) : (
-                                <>You cannot mint any token anymore.</>
-                              )}
-                            </div>
-                          )}
-                          {!isWhitelistUser && (
-                            <div
-                              style={{
-                                fontSize: '0.7em',
-                                marginTop: '15px',
-                                color: 'gray',
-                              }}
-                            >
-                              You are not on the whitelist!
-                            </div>
-                          )}
-                        </div>
-                      </>
-                    )}
-                </div>
+
+                {isActive && (
+                  <div
+                    className='container flex flex-col items-center justify-center pt-3  col-span-2'
+                  >
+                    <MintButton
+                      candyMachine={candyMachine}
+                      isMinting={isUserMinting}
+                      onMint={onMint}
+                      isActive={
+                        isActive ||
+                        (isPresale && isWhitelistUser && isValidBalance)
+                      }
+                    />
+                  </div>
+                )}
+                {useWhitelist &&
+                  (!endDate || Date.now() < endDate.getTime()) && (
+                    <>
+                      <div
+                        className='container mt-4 flex text-xs flex-col items-center justify-center text-gray-400 col-span-2'
+                      >
+                        {isWhitelistUser && (
+                          <div className='text-center'>
+                            You are on the whitelist!{' '}
+                            {/* {mintsLeft > 0 ? (
+                          <>You can still mint up to {mintsLeft} token.</>
+                        ) : (
+                          <>You cannot mint any token anymore.</>
+                        )} */}
+                          </div>
+                        )}
+                        {!isWhitelistUser && (
+                          <div>
+                            You are not on the whitelist!
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
               </div>
-            </>
-          )}
-        </>
+            )}
+          </div>
+        </div>
       )}
     </>
   );

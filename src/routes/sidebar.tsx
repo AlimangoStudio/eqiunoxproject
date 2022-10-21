@@ -31,7 +31,7 @@ const routes: IRoute[] = [
     name: 'Marketplace',
   },
   {
-    path: '/app/nft-pack',
+    path: '/app/solana/nft-pack',
     icon: 'CardsIcon',
     name: 'NFT Pack Mint',
   },

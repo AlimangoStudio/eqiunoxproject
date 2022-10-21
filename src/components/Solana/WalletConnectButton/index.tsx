@@ -1,7 +1,7 @@
 import "./style.css";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
-const Wallet = () => {
+const WalletConnectButton = () => {
   return (
     <>
       <WalletMultiButton />
@@ -9,4 +9,4 @@ const Wallet = () => {
   );
 };
 
-export default Wallet;
+export default WalletConnectButton;

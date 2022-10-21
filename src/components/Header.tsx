@@ -11,6 +11,8 @@ import {
   OutlineLogoutIcon,
 } from '../icons';
 import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui';
+import WalletConnectButton from './Solana/WalletConnectButton';
+import { useLocation } from 'react-router-dom';
 
 function Header() {
   const { mode, toggleMode } = useContext(WindmillContext);
@@ -18,6 +20,9 @@ function Header() {
 
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const isSolanaSubtree = location.pathname.search("/solana/") > -1;
 
   function handleNotificationsClick() {
     setIsNotificationsMenuOpen(!isNotificationsMenuOpen);
@@ -135,6 +140,9 @@ function Header() {
               </DropdownItem>
             </Dropdown>
           </li>
+          {isSolanaSubtree && <li>
+            <WalletConnectButton/>
+          </li>}
         </ul>
       </div>
     </header>
