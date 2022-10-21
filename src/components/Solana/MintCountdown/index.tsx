@@ -33,27 +33,27 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
     if (completed) {
       return status ? <span className="flex mb-1 h-7 p-2 flex-col items-center content-center justify-center bg-gray-700 text-white rounded-md font-bold text-lg">{status}</span> : null;
     } else {
-      const itemClassName = "font-bold text-lg m-1 w-12 h-12 flex flex-col content-center items-center justify-center bg-gray-700 text-white rounded-md";
-
+      const itemClassName = "font-bold text-lg m-1 p-4 w-12 h-14 flex flex-col content-center items-center justify-center bg-gray-700 text-white rounded-md";
+      const textClassName = "text-sm"
       return (
         <div className="flex p-0" style={style}>
           <div className={itemClassName}>
-            <span>
+            <div>
               {hours < 10 ? `0${hours}` : hours}
-            </span>
-            <span className=''>hrs</span>
+            </div>
+            <div className={textClassName}>hrs</div>
           </div>
           <div className={itemClassName}>
-            <span>
+            <div>
               {minutes < 10 ? `0${minutes}` : minutes}
-            </span>
-            <span>mins</span>
+            </div>
+            <div className={textClassName}>mins</div>
           </div>
           <div className={itemClassName}>
-          <span>
+          <div>
               {seconds < 10 ? `0${seconds}` : seconds}
-            </span>
-            <span>secs</span>
+            </div>
+            <div className={textClassName}>secs</div>
           </div>
         </div>
       );

@@ -24,12 +24,11 @@ function NftPack() {
           </div>
           <div className="pt-8 flex items-center justify-center">
             <CandyMachine
-                            candyMachineId="BaDQZbv1pjj4XSun6iizfha1xcRojTtX7gCLEf4XQnur"
-                            whitelist={gumdrop}
-                            whitelistMint="DqEXaNpbF9cpvKgW6oyezdequozXAFNTn2aJWQVJrC5A"
-                            name={'XHEN'}
-                        />
-                        <MintCountdown date={new Date()}/>
+                candyMachineId="7HgTf1XFqYmMhATAzAAbejmCDLbeoJBUDRL8jQH67yXN"
+                whitelist={gumdrop}
+                whitelistMint="DqEXaNpbF9cpvKgW6oyezdequozXAFNTn2aJWQVJrC5A"
+                name={'NFT PACK'}
+            />
           </div>
         </div>
     </>
