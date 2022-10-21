@@ -558,7 +558,7 @@ const Machine = (props: MachineProps) => {
                   {startDate}
                 </div>
                 <div className='text-right'>
-                  {candyMachine.state.goLiveDate &&
+                  {!candyMachine?.state?.isSoldOut && candyMachine.state.goLiveDate &&
                     new Date(Date.now()) >
                     toDate(candyMachine.state.goLiveDate)! &&
                     (!endDate || Date.now() < endDate.getTime()) && (
@@ -579,9 +579,11 @@ const Machine = (props: MachineProps) => {
                     )}
                   {(candyMachine?.state?.isSoldOut ||
                     (endDate && Date.now() > endDate.getTime())) && (
-                      <span>
-                        &bull;
-                        Completed
+                      <span className='text-gray-400'>
+                        <span className='relative'>
+                          <b className='right-2 -top-5 text-5xl absolute'>&bull;</b>
+                        </span>
+                        <b>Completed</b>
                       </span>
                     )}
                 </div>
