@@ -102,7 +102,7 @@ function Header() {
             </Dropdown>
           </li>
           {/* <!-- Profile menu --> */}
-          <li className="relative">
+          {/* <li className="relative">
             <button
               className="rounded-full focus:shadow-outline-purple focus:outline-none"
               onClick={handleProfileClick}
@@ -134,7 +134,7 @@ function Header() {
                 <span>Log out</span>
               </DropdownItem>
             </Dropdown>
-          </li>
+          </li> */}
         </ul>
       </div>
     </header>
