@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy } from "react";
 
 // use lazy for better code splitting, a.k.a. load faster
 const Home = lazy(() => import('../pages/Home'))
@@ -27,19 +27,23 @@ const Blank = lazy(() => import('../pages/Blank'));
  */
 const routes = [
   {
-    path: '/home', // the url
+    path: "/home", // the url
     component: Home, // view rendered
   },
   {
-    path: '/launchpad', // the url
+    path: "/launchpad", // the url
     component: LaunchPad, // view rendered
   },
   {
-    path: '/market', // the url
+    path: "/market", // the url
     component: Market, // view rendered
   },
   {
-    path: '/dashboard', // the url
+    path: "/solana/nft-pack", // the url
+    component: NftPack, // view rendered
+  },
+  {
+    path: "/dashboard", // the url
     component: Dashboard, // view rendered
   },
   {
@@ -51,33 +55,33 @@ const routes = [
     component: Forms,
   },
   {
-    path: '/cards',
+    path: "/cards",
     component: Cards,
   },
   {
-    path: '/charts',
+    path: "/charts",
     component: Charts,
   },
   {
-    path: '/buttons',
+    path: "/buttons",
     component: Buttons,
   },
   {
-    path: '/modals',
+    path: "/modals",
     component: Modals,
   },
   {
-    path: '/tables',
+    path: "/tables",
     component: Tables,
   },
   {
-    path: '/404',
+    path: "/404",
     component: Page404,
   },
   {
-    path: '/blank',
+    path: "/blank",
     component: Blank,
-  }
+  },
 ];
 
 export default routes;
