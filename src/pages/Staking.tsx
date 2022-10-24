@@ -9,35 +9,35 @@ import { CartIcon, ChatIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import pic from "../assets/img/23.png"
 import usdc from "../assets/img/USDC.png"
-import { 
-  ConnectionProvider, 
-  WalletProvider,
-} from "@solana/wallet-adapter-react/lib/index.js";
-import {
-  getPhantomWallet,
-  getSlopeWallet,
-  getSolflareWallet,
-  getLedgerWallet,
-  getSolletWallet,
-  getSolletExtensionWallet
-} from '@solana/wallet-adapter-wallets';
-import { 
-  WalletModalProvider,
-} from "@solana/wallet-adapter-react-ui";
-import { 
-  WalletMultiButton,
-} from "@solana/wallet-adapter-react-ui";
-import {useWallet } from '@solana/wallet-adapter-react';
+// import { 
+//   ConnectionProvider, 
+//   WalletProvider,
+// } from "@solana/wallet-adapter-react/lib/index.js";
+// import {
+//   getPhantomWallet,
+//   getSlopeWallet,
+//   getSolflareWallet,
+//   getLedgerWallet,
+//   getSolletWallet,
+//   getSolletExtensionWallet
+// } from '@solana/wallet-adapter-wallets';
+// import { 
+//   WalletModalProvider,
+// } from "@solana/wallet-adapter-react-ui";
+// import { 
+//   WalletMultiButton,
+// } from "@solana/wallet-adapter-react-ui";
+// import {useWallet } from '@solana/wallet-adapter-react';
 
-import '@solana/wallet-adapter-react-ui/styles.css';
-const wallets = [
-  getPhantomWallet(),
-  getSlopeWallet(),
-  getSolflareWallet(),
-  getLedgerWallet(),
-  getSolletWallet(),
-  getSolletExtensionWallet()
-];
+// import '@solana/wallet-adapter-react-ui/styles.css';
+// const wallets = [
+//   getPhantomWallet(),
+//   getSlopeWallet(),
+//   getSolflareWallet(),
+//   getLedgerWallet(),
+//   getSolletWallet(),
+//   getSolletExtensionWallet()
+// ];
 
 function Staking() {
   return (
