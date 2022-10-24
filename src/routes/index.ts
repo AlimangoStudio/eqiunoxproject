@@ -1,19 +1,19 @@
 import { lazy } from "react";
 
 // use lazy for better code splitting, a.k.a. load faster
-const Home = lazy(() => import("../pages/Home"));
-const LaunchPad = lazy(() => import("../pages/LaunchPad"));
-const Market = lazy(() => import("../pages/Market"));
-const Dashboard = lazy(() => import("../pages/Dashboard"));
-const Forms = lazy(() => import("../pages/Forms"));
-const Cards = lazy(() => import("../pages/Cards"));
-const Charts = lazy(() => import("../pages/Charts"));
-const Buttons = lazy(() => import("../pages/Buttons"));
-const Modals = lazy(() => import("../pages/Modals"));
-const Tables = lazy(() => import("../pages/Tables"));
-const Page404 = lazy(() => import("../pages/404"));
-const Blank = lazy(() => import("../pages/Blank"));
-const NftPack = lazy(() => import("../pages/Solana/NftPack"));
+const Home = lazy(() => import('../pages/Home'))
+const LaunchPad = lazy(() => import('../pages/LaunchPad'))
+const Market = lazy(() => import('../pages/Market'))
+const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Staking = lazy(() => import('../pages/Staking'));
+const Forms = lazy(() => import('../pages/Forms'));
+const Cards = lazy(() => import('../pages/Cards'));
+const Charts = lazy(() => import('../pages/Charts'));
+const Buttons = lazy(() => import('../pages/Buttons'));
+const Modals = lazy(() => import('../pages/Modals'));
+const Tables = lazy(() => import('../pages/Tables'));
+const Page404 = lazy(() => import('../pages/404'));
+const Blank = lazy(() => import('../pages/Blank'));
 
 /**
  * ⚠ These are internal routes!
@@ -47,7 +47,11 @@ const routes = [
     component: Dashboard, // view rendered
   },
   {
-    path: "/forms",
+    path: '/staking', // the url
+    component: Staking, // view rendered
+  },
+  {
+    path: '/forms',
     component: Forms,
   },
   {
