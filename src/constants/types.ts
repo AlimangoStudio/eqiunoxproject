@@ -1,4 +1,5 @@
 export type NftMetadata = {
+    id: string
     base_uri?: string
     icon: string
     name: string
@@ -8,8 +9,10 @@ export type NftMetadata = {
     reference_hash?: string
     owner_id: string
     floor_price?: string
-    total_cards_sale: number | 0
-    total_cards_not_sale: number | 0
+    total_card_sale: number | 0
+    total_card_not_sale: number | 0
+    is_paras: boolean | false
+    total_owners: number | 0
 }
 
 
@@ -52,10 +55,12 @@ export type ParasCollectionMetadata = {
     media: string
     cover?: string
     previews?: [string]
+    description?: string
 }
 
 export type ParasCollectionStat = {
-    total_card_sale: number
-    total_card_not_sale: number
+    total_card_sale: number | 0
+    total_card_not_sale: number | 0
     floor_price: string
+    total_owners: number | 0
 }
