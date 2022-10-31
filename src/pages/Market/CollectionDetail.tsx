@@ -77,9 +77,9 @@ function CollectionDetail() {
         }
 
         const getParasDetail = async () => {
-            let res = await axios.get('http://localhost:5000/paras', { params: { collection_id: id}})
+            let res = await axios.get('https://equinoxlabs.space/api/paras', { params: { collection_id: id}})
 			let parasCollections = await Bluebird.map(res.data.data.results, async (collection: ParasCollectionMetadata) => {
-				let response = await axios.get("http://localhost:5000/paras/stat", {params: {collection_id: collection.collection_id}})
+				let response = await axios.get("https://equinoxlabs.space/api/paras/stat", {params: {collection_id: collection.collection_id}})
 				let stat: ParasCollectionStat = response.data.data.results
 				let icon = collection.media? collection.media: collection.previews? collection.previews[0]: collection.cover
 

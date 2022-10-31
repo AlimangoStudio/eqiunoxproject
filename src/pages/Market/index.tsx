@@ -106,7 +106,7 @@ const MarketContent: React.FC = () => {
 			setLoading(true)
 
 			// Get NFT Contract Ids
-			let res_ = await axios.get('http://localhost:5000/paras/addresses')
+			let res_ = await axios.get('https://equinoxlabs.space/api/paras/addresses')
 			let NFT_CONTRACT_IDS =  res_.data
 			// Get NFT Metadata
 			let nCollections: NftMetadata[]
@@ -122,9 +122,9 @@ const MarketContent: React.FC = () => {
 			})
 				
 			setCollections([...nCollections])
-			let res = await axios.get('http://localhost:5000/paras', { params: {}})
+			let res = await axios.get('https://equinoxlabs.space/api/paras', { params: {}})
 			let parasCollections = await Bluebird.map(res.data.data.results, async (collection: ParasCollectionMetadata) => {
-				let response = await axios.get("http://localhost:5000/paras/stat", {params: {collection_id: collection.collection_id}})
+				let response = await axios.get("https://equinoxlabs.space/api/paras/stat", {params: {collection_id: collection.collection_id}})
 				let stat: ParasCollectionStat = response.data.data.results
 				let icon = collection.media? collection.media: collection.previews? collection.previews[0]: collection.cover
 				let result: NftMetadata = {
@@ -160,7 +160,7 @@ const MarketContent: React.FC = () => {
 		if (listingAddress == "") {
 			return
 		}
-		await axios.post('http://localhost:5000/paras/add', {address: listingAddress})
+		await axios.post('/api/paras/add', {address: listingAddress})
 		setListingAddress("")
 		window.location.reload()
 
